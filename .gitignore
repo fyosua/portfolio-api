@@ -1,6 +1,53 @@
-manifest/cache/
-manifest/logs/
-manifest/tmp/
-symphony/
-workspace/uploads/
-install-log.txt
+# .gitignore for a Symfony project running with Docker
+
+### Symfony ###
+# Ignore local environment variables and secrets.
+# Only commit the .env file, which should contain non-sensitive defaults.
+.env.local
+.env.*.local
+
+# Ignore the vendor directory, which is managed by Composer.
+# Always run "composer install" after cloning a project.
+/vendor/
+
+# Ignore the directory for temporary files (cache, logs, etc.).
+/var/
+
+# Ignore the directory for uploaded files (if you have them).
+/public/uploads/
+
+# Ignore build artifacts if using Webpack Encore or AssetMapper.
+/public/build/
+/public/assets/
+
+# Ignore PHPUnit coverage reports.
+/coverage/
+
+### Docker ###
+# Ignore local Docker data volumes. This is a common pattern,
+# although the volumes are typically managed outside the project root.
+.docker/
+docker-compose.override.yml
+
+### IDE and OS Files ###
+# JetBrains (PhpStorm, etc.)
+.idea/
+
+# Visual Studio Code
+.vscode/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+### Backup Files ###
+# Ignore any backup archives we create.
+*.tar.gz
+*.zip
+*.rar
