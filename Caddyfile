@@ -1,0 +1,17 @@
+{
+    frankenphp
+    order php_server before file_server
+}
+
+# Listen on port 80 for any hostname
+:80 {
+    # Set the webroot to the public directory
+    root * /app/public
+    # Enable compression
+    encode zstd gzip
+    # Log all requests
+    log
+
+    # Run the Symfony app
+    php_server
+}

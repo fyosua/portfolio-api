@@ -1,0 +1,30 @@
+services:
+  app:
+    build:
+      context: .
+    restart: unless-stopped
+    environment:
+      APP_ENV: dev
+      APP_SECRET: '!ChangeMe!'
+      DATABASE_URL: "postgresql://app_user:!ChangeMe!@database:5432/app_db?serverVersion=16&charset=utf8"
+    ports:
+      - "80:80" # We only need HTTP now
+    volumes:
+      - .:/app
+      # This is the crucial line that overwrites the default config
+      - ./Caddyfile:/etc/frankenphp/Caddyfile
+    depends_on:
+      - database
+
+  database:
+    image: "postgres:16-alpine"
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: app_db
+      POSTGRES_USER: app_user
+      POSTGRES_PASSWORD: '!ChangeMe!'
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:
