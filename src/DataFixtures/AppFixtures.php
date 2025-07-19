@@ -192,14 +192,14 @@ class AppFixtures extends Fixture
         );
         $manager->persist($about);
 
-	// Profile Data
-	$profile = new Profile();
-	$profile->setName('Yosua Ferdian');
-	$profile->setTitle('Technical Specialist & Web FullStack Developer');
-	$profile->setEmail('ferdianyosua@gmail.com');
-	$profile->setPhone('+601127817121');
-	$profile->setLinkedin('https://www.linkedin.com/in/yosua-ferdian-a1a929116/');
-	$manager->persist($profile);
+        // Profile Data
+        $profile = new Profile();
+        $profile->setName('Yosua Ferdian');
+        $profile->setTitle('Technical Specialist & Web FullStack Developer');
+        $profile->setEmail('ferdianyosua@gmail.com');
+        $profile->setPhone('+601127817121');
+        $profile->setLinkedin('https://www.linkedin.com/in/yosua-ferdian-a1a929116/');
+        $manager->persist($profile);
 	
         $manager->flush();
     }
