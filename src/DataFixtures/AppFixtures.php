@@ -1,5 +1,4 @@
 <?php
-<?php
 
 namespace App\DataFixtures;
 
@@ -22,14 +21,14 @@ class AppFixtures extends Fixture
                 'location' => 'Kuala Lumpur',
                 'date' => 'Sep 2024 - Present',
                 'summary' => 'Rehired to resume responsibilities as a Technical Specialist, highlighting my proven expertise and performance in Google Tracking solutions.',
-                'responsibilities' => json_encode([
+                'responsibilities' => [
                     [
                         'point' => 'Continue specializing in implementing and managing Google Tracking tools, including Google Ads, Google Analytics, Google Tag Manager, and Google Merchant Center.'
                     ],
                     [
                         'point' => 'Maintain exceptional performance in consulting, technical support, and communication, reinforcing client trust and satisfaction.'
                     ]
-                ]),
+                ],
             ],
             [
                 'role' => 'Technical Hosting Support Engineer',
@@ -37,7 +36,7 @@ class AppFixtures extends Fixture
                 'location' => 'Bali',
                 'date' => 'Feb 2024 - Aug 2024',
                 'summary' => 'I excel at promptly resolving diverse client inquiries across hosting services, ensuring uninterrupted operations for our valued clients.',
-                'responsibilities' => json_encode([
+                'responsibilities' => [
                     [
                         'point' => 'Offer proficient technical support to clients, with a focus on diagnosing and resolving issues pertaining to various aspects including:',
                         'subPoints' => [
@@ -55,7 +54,7 @@ class AppFixtures extends Fixture
                     [
                         'point' => 'Engage with the global English-speaking market through diverse communication channels, including ticketing, calls, and live chat support.'
                     ]
-                ]),
+                ],
             ],
             [
                 'role' => 'Technical Specialist - Google Technical Solutions',
@@ -63,14 +62,14 @@ class AppFixtures extends Fixture
                 'location' => 'Kuala Lumpur',
                 'date' => 'Sep 2022 - Nov 2023',
                 'summary' => 'Dedicated myself to specializing in Google Tracking products.',
-                'responsibilities' => json_encode([
+                'responsibilities' => [
                     [
                         'point' => 'Proficiently implemented Google Tracking Tools, including Google Ads, Google Analytics, Google Tag Manager, and Google Merchant Center.'
                     ],
                     [
                         'point' => 'Excelled in providing consulting services with strong business communication and product pitching abilities.'
                     ]
-                ]),
+                ],
             ],
             [
                 'role' => 'Back End Developer',
@@ -78,7 +77,7 @@ class AppFixtures extends Fixture
                 'location' => 'Jakarta',
                 'date' => 'Feb 2021 - Feb 2022',
                 'summary' => 'Designed and enhanced server-side applications, with proficiency in PHP, JavaScript, and frameworks like Laravel and React.',
-                'responsibilities' => json_encode([
+                'responsibilities' => [
                     [
                         'point' => 'Prioritized seamless API integration between the website\'s back-end and front-end to optimize user experience.'
                     ],
@@ -91,7 +90,7 @@ class AppFixtures extends Fixture
                     [
                         'point' => 'Expertise in data infrastructure enables swift and accurate analysis of technical documents.'
                     ]
-                ]),
+                ],
             ],
             [
                 'role' => 'IT Support',
@@ -99,7 +98,7 @@ class AppFixtures extends Fixture
                 'location' => 'Jakarta',
                 'date' => 'Feb 2018 - Feb 2019',
                 'summary' => 'Committed to providing high-quality IT support, delivering technical assistance via phone and email within a CRM system.',
-                'responsibilities' => json_encode([
+                'responsibilities' => [
                     [
                         'point' => 'Proficient in troubleshooting server products (cPanel, WHMPanel, CloudFlare, SSL, Redis), primarily for WordPress websites.'
                     ],
@@ -109,7 +108,7 @@ class AppFixtures extends Fixture
                     [
                         'point' => 'Possess knowledge in domain management, DNS record systems, and various payment platforms.'
                     ]
-                ]),
+                ],
             ],
         ];
 
@@ -192,4 +191,6 @@ class AppFixtures extends Fixture
         );
         $manager->persist($about);
 
-        $manager-
+        $manager->flush();
+    }
+}
