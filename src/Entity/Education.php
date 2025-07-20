@@ -3,24 +3,18 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\Get;
-use ApiPlatform\Metadata\GetCollection;
 use App\Repository\EducationRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EducationRepository::class)]
-#[ApiResource(
-    operations: [
-        new Get(),
-        new GetCollection(uriTemplate: '/educations') // This forces the plural URL
-    ]
-)]
+#[ApiResource]
 class Education
 {
     #[ORM\Id]
+    #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = 1;
+    private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     private ?string $degree = null;
@@ -33,11 +27,6 @@ class Education
 
     #[ORM\Column(type: Types::JSON)]
     private array $details = [];
-
-    public function __construct()
-    {
-        $this->id = 1;
-    }
 
     public function getId(): ?int
     {
