@@ -7,6 +7,9 @@ use App\Entity\Experience;
 use App\Entity\Skill;
 use App\Entity\SkillCategory;
 use App\Entity\Profile;
+use App\Entity\Education;
+use App\Entity\Language;
+use App\Entity\PersonalInfo;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -200,7 +203,37 @@ class AppFixtures extends Fixture
         $profile->setPhone('+601127817121');
         $profile->setLinkedin('https://www.linkedin.com/in/yosua-ferdian-a1a929116/');
         $manager->persist($profile);
-	
+
+// Education Data
+$education = new Education();
+$education->setDegree('Bachelor of Computer Science');
+$education->setUniversity('Universitas Bina Nusantara');
+$education->setPeriod('Aug 2015 - Jun 2020');
+$education->setDetails([
+    "Built a solid foundation in computer science, focusing on algorithms, software development, and system architecture.",
+    "Gained expertise in programming languages such as JavaScript, PHP, HTML, and Bash, and developed foundational skills in Java, with practical applications in web development and database management."
+]);
+$manager->persist($education);
+
+// Languages Data
+$languagesData = [
+    ['lang' => 'Indonesian', 'level' => 'Native Speaker'],
+    ['lang' => 'Malay', 'level' => 'Fluent'],
+    ['lang' => 'English', 'level' => 'Very Good'],
+];
+
+foreach ($languagesData as $langData) {
+    $language = new Language();
+    $language->setLang($langData['lang']);
+    $language->setLevel($langData['level']);
+    $manager->persist($language);
+}
+
+// Personal Info Data
+$personalInfo = new PersonalInfo();
+$personalInfo->setDob('07-05-1997');
+$personalInfo->setNationality('Indonesian');
+$manager->persist($personalInfo);
         $manager->flush();
     }
 }
