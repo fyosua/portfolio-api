@@ -3,13 +3,13 @@
 namespace App\DataFixtures;
 
 use App\Entity\About;
-use App\Entity\Experience;
-use App\Entity\Skill;
-use App\Entity\SkillCategory;
-use App\Entity\Profile;
 use App\Entity\Education;
+use App\Entity\Experience;
 use App\Entity\Language;
 use App\Entity\PersonalInfo;
+use App\Entity\Profile;
+use App\Entity\Skill;
+use App\Entity\SkillCategory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -26,12 +26,8 @@ class AppFixtures extends Fixture
                 'date' => 'Sep 2024 - Present',
                 'summary' => 'Rehired to resume responsibilities as a Technical Specialist, highlighting my proven expertise and performance in Google Tracking solutions.',
                 'responsibilities' => [
-                    [
-                        'point' => 'Continue specializing in implementing and managing Google Tracking tools, including Google Ads, Google Analytics, Google Tag Manager, and Google Merchant Center.'
-                    ],
-                    [
-                        'point' => 'Maintain exceptional performance in consulting, technical support, and communication, reinforcing client trust and satisfaction.'
-                    ]
+                    ['point' => 'Continue specializing in implementing and managing Google Tracking tools, including Google Ads, Google Analytics, Google Tag Manager, and Google Merchant Center.'],
+                    ['point' => 'Maintain exceptional performance in consulting, technical support, and communication, reinforcing client trust and satisfaction.']
                 ],
             ],
             [
@@ -52,12 +48,8 @@ class AppFixtures extends Fixture
                             'Assignment and management of DNS clusters.'
                         ]
                     ],
-                    [
-                        'point' => 'Utilize advanced ticketing systems to manage and prioritize client inquiries efficiently, ensuring prompt resolution.'
-                    ],
-                    [
-                        'point' => 'Engage with the global English-speaking market through diverse communication channels, including ticketing, calls, and live chat support.'
-                    ]
+                    ['point' => 'Utilize advanced ticketing systems to manage and prioritize client inquiries efficiently, ensuring prompt resolution.'],
+                    ['point' => 'Engage with the global English-speaking market through diverse communication channels, including ticketing, calls, and live chat support.']
                 ],
             ],
             [
@@ -67,12 +59,8 @@ class AppFixtures extends Fixture
                 'date' => 'Sep 2022 - Nov 2023',
                 'summary' => 'Dedicated myself to specializing in Google Tracking products.',
                 'responsibilities' => [
-                    [
-                        'point' => 'Proficiently implemented Google Tracking Tools, including Google Ads, Google Analytics, Google Tag Manager, and Google Merchant Center.'
-                    ],
-                    [
-                        'point' => 'Excelled in providing consulting services with strong business communication and product pitching abilities.'
-                    ]
+                    ['point' => 'Proficiently implemented Google Tracking Tools, including Google Ads, Google Analytics, Google Tag Manager, and Google Merchant Center.'],
+                    ['point' => 'Excelled in providing consulting services with strong business communication and product pitching abilities.']
                 ],
             ],
             [
@@ -82,18 +70,10 @@ class AppFixtures extends Fixture
                 'date' => 'Feb 2021 - Feb 2022',
                 'summary' => 'Designed and enhanced server-side applications, with proficiency in PHP, JavaScript, and frameworks like Laravel and React.',
                 'responsibilities' => [
-                    [
-                        'point' => 'Prioritized seamless API integration between the website\'s back-end and front-end to optimize user experience.'
-                    ],
-                    [
-                        'point' => 'Skilled in deploying websites via Nginx, configuring SSL, and occasionally using PM2 for deployment management.'
-                    ],
-                    [
-                        'point' => 'Successfully implemented mail server setups for CMS systems, facilitating user management, invitations, and order notifications.'
-                    ],
-                    [
-                        'point' => 'Expertise in data infrastructure enables swift and accurate analysis of technical documents.'
-                    ]
+                    ['point' => 'Prioritized seamless API integration between the website\'s back-end and front-end to optimize user experience.'],
+                    ['point' => 'Skilled in deploying websites via Nginx, configuring SSL, and occasionally using PM2 for deployment management.'],
+                    ['point' => 'Successfully implemented mail server setups for CMS systems, facilitating user management, invitations, and order notifications.'],
+                    ['point' => 'Expertise in data infrastructure enables swift and accurate analysis of technical documents.']
                 ],
             ],
             [
@@ -103,15 +83,9 @@ class AppFixtures extends Fixture
                 'date' => 'Feb 2018 - Feb 2019',
                 'summary' => 'Committed to providing high-quality IT support, delivering technical assistance via phone and email within a CRM system.',
                 'responsibilities' => [
-                    [
-                        'point' => 'Proficient in troubleshooting server products (cPanel, WHMPanel, CloudFlare, SSL, Redis), primarily for WordPress websites.'
-                    ],
-                    [
-                        'point' => 'Skilled in utilizing CRM systems like WHMCS in hosting support environments.'
-                    ],
-                    [
-                        'point' => 'Possess knowledge in domain management, DNS record systems, and various payment platforms.'
-                    ]
+                    ['point' => 'Proficient in troubleshooting server products (cPanel, WHMPanel, CloudFlare, SSL, Redis), primarily for WordPress websites.'],
+                    ['point' => 'Skilled in utilizing CRM systems like WHMCS in hosting support environments.'],
+                    ['point' => 'Possess knowledge in domain management, DNS record systems, and various payment platforms.']
                 ],
             ],
         ];
@@ -148,6 +122,7 @@ class AppFixtures extends Fixture
                     ['name' => 'HTML & CSS', 'icon' => 'HiCode'],
                     ['name' => 'Wordpress', 'icon' => 'SiWordpress'],
                     ['name' => 'Rest API', 'icon' => 'HiCode'],
+                    ['name' => 'Java', 'icon' => 'SiJava'], // New skill added here
                 ],
             ],
             [
@@ -190,9 +165,7 @@ class AppFixtures extends Fixture
 
         // About Me Data
         $about = new About();
-        $about->setContent(
-            'Experienced Website Developer, Technical Specialist, and Technical Hosting Specialist with a strong background in web technologies. Proven track record in website development, management, and technical hosting support. Expertise includes overseeing technical implementation, efficiently troubleshooting complex issues, and providing exceptional customer service. Enthusiastic about leveraging knowledge and experience to contribute to innovative digital projects and provide comprehensive technical hosting support.'
-        );
+        $about->setContent('Experienced Website Developer, Technical Specialist, and Technical Hosting Specialist with a strong background in web technologies. Proven track record in website development, management, and technical hosting support. Expertise includes overseeing technical implementation, efficiently troubleshooting complex issues, and providing exceptional customer service. Enthusiastic about leveraging knowledge and experience to contribute to innovative digital projects and provide comprehensive technical hosting support.');
         $manager->persist($about);
 
         // Profile Data
@@ -204,36 +177,37 @@ class AppFixtures extends Fixture
         $profile->setLinkedin('https://www.linkedin.com/in/yosua-ferdian-a1a929116/');
         $manager->persist($profile);
 
-// Education Data
-$education = new Education();
-$education->setDegree('Bachelor of Computer Science');
-$education->setUniversity('Universitas Bina Nusantara');
-$education->setPeriod('Aug 2015 - Jun 2020');
-$education->setDetails([
-    "Built a solid foundation in computer science, focusing on algorithms, software development, and system architecture.",
-    "Gained expertise in programming languages such as JavaScript, PHP, HTML, and Bash, and developed foundational skills in Java, with practical applications in web development and database management."
-]);
-$manager->persist($education);
+        // Education Data
+        $education = new Education();
+        $education->setDegree('Bachelor of Computer Science');
+        $education->setUniversity('Universitas Bina Nusantara');
+        $education->setPeriod('Aug 2015 - Jun 2020');
+        $education->setDetails([
+            "Built a solid foundation in computer science, focusing on algorithms, software development, and system architecture.",
+            "Gained expertise in programming languages such as JavaScript, PHP, HTML, and Bash, and developed foundational skills in Java, with practical applications in web development and database management."
+        ]);
+        $manager->persist($education);
 
-// Languages Data
-$languagesData = [
-    ['lang' => 'Indonesian', 'level' => 'Native Speaker'],
-    ['lang' => 'Malay', 'level' => 'Fluent'],
-    ['lang' => 'English', 'level' => 'Very Good'],
-];
+        // Languages Data
+        $languagesData = [
+            ['lang' => 'Indonesian', 'level' => 'Native Speaker'],
+            ['lang' => 'Malay', 'level' => 'Fluent'],
+            ['lang' => 'English', 'level' => 'Very Good'],
+        ];
 
-foreach ($languagesData as $langData) {
-    $language = new Language();
-    $language->setLang($langData['lang']);
-    $language->setLevel($langData['level']);
-    $manager->persist($language);
-}
+        foreach ($languagesData as $langData) {
+            $language = new Language();
+            $language->setLang($langData['lang']);
+            $language->setLevel($langData['level']);
+            $manager->persist($language);
+        }
 
-// Personal Info Data
-$personalInfo = new PersonalInfo();
-$personalInfo->setDob('07-05-1997');
-$personalInfo->setNationality('Indonesian');
-$manager->persist($personalInfo);
+        // Personal Info Data
+        $personalInfo = new PersonalInfo();
+        $personalInfo->setDob('07-05-1997');
+        $personalInfo->setNationality('Indonesian');
+        $manager->persist($personalInfo);
+
         $manager->flush();
     }
 }
