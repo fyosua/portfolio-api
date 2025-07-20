@@ -17,6 +17,50 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
+        // Profile Data (Singleton)
+        $profile = new Profile();
+        $profile->setName('Yosua Ferdian');
+        $profile->setTitle('Technical Specialist & Web FullStack Developer');
+        $profile->setEmail('ferdianyosua@gmail.com');
+        $profile->setPhone('+601127817121');
+        $profile->setLinkedin('https://www.linkedin.com/in/yosua-ferdian-a1a929116/');
+        $manager->persist($profile);
+
+        // About Me Data (Singleton)
+        $about = new About();
+        $about->setContent('Experienced Website Developer, Technical Specialist, and Technical Hosting Specialist with a strong background in web technologies. Proven track record in website development, management, and technical hosting support. Expertise includes overseeing technical implementation, efficiently troubleshooting complex issues, and providing exceptional customer service. Enthusiastic about leveraging knowledge and experience to contribute to innovative digital projects and provide comprehensive technical hosting support.');
+        $manager->persist($about);
+
+        // Personal Info Data (Singleton)
+        $personalInfo = new PersonalInfo();
+        $personalInfo->setDob('07-05-1997');
+        $personalInfo->setNationality('Indonesian');
+        $manager->persist($personalInfo);
+
+        // Education Data
+        $education = new Education();
+        $education->setDegree('Bachelor of Computer Science');
+        $education->setUniversity('Universitas Bina Nusantara');
+        $education->setPeriod('Aug 2015 - Jun 2020');
+        $education->setDetails([
+            "Built a solid foundation in computer science, focusing on algorithms, software development, and system architecture.",
+            "Gained expertise in programming languages such as JavaScript, PHP, HTML, and Bash, and developed foundational skills in Java, with practical applications in web development and database management."
+        ]);
+        $manager->persist($education);
+
+        // Languages Data
+        $languagesData = [
+            ['lang' => 'Indonesian', 'level' => 'Native Speaker'],
+            ['lang' => 'Malay', 'level' => 'Fluent'],
+            ['lang' => 'English', 'level' => 'Very Good'],
+        ];
+        foreach ($languagesData as $langData) {
+            $language = new Language();
+            $language->setLang($langData['lang']);
+            $language->setLevel($langData['level']);
+            $manager->persist($language);
+        }
+
         // Experiences Data
         $experiencesData = [
             [
@@ -40,12 +84,7 @@ class AppFixtures extends Fixture
                     [
                         'point' => 'Offer proficient technical support to clients, with a focus on diagnosing and resolving issues pertaining to various aspects including:',
                         'subPoints' => [
-                            'Domain management',
-                            'Shared and VPS hosting environments',
-                            'Control panel platforms such as cPanel, WHM, Plesk, and SolidCP',
-                            'Rectifying website errors and malfunctions',
-                            'Configuration and troubleshooting of mail servers',
-                            'Assignment and management of DNS clusters.'
+                            'Domain management', 'Shared and VPS hosting environments', 'Control panel platforms such as cPanel, WHM, Plesk, and SolidCP', 'Rectifying website errors and malfunctions', 'Configuration and troubleshooting of mail servers', 'Assignment and management of DNS clusters.'
                         ]
                     ],
                     ['point' => 'Utilize advanced ticketing systems to manage and prioritize client inquiries efficiently, ensuring prompt resolution.'],
@@ -89,7 +128,6 @@ class AppFixtures extends Fixture
                 ],
             ],
         ];
-
         foreach ($experiencesData as $expData) {
             $experience = new Experience();
             $experience->setRole($expData['role']);
@@ -104,56 +142,31 @@ class AppFixtures extends Fixture
         // Skills Data
         $skillCategoriesData = [
             [
-                'title' => 'Google Ecosystem',
-                'icon' => 'SiGoogle',
-                'skills' => [
-                    ['name' => 'Google Ads', 'icon' => 'SiGoogleads'],
-                    ['name' => 'Google Analytics', 'icon' => 'SiGoogleanalytics'],
-                    ['name' => 'Google Tag Manager', 'icon' => 'HiAdjustments'],
-                    ['name' => 'Google Merchant Center', 'icon' => 'HiDesktopComputer'],
+                'title' => 'Google Ecosystem', 'icon' => 'SiGoogle', 'skills' => [
+                    ['name' => 'Google Ads', 'icon' => 'SiGoogleads'], ['name' => 'Google Analytics', 'icon' => 'SiGoogleanalytics'], ['name' => 'Google Tag Manager', 'icon' => 'HiAdjustments'], ['name' => 'Google Merchant Center', 'icon' => 'HiDesktopComputer'],
                 ],
             ],
             [
-                'title' => 'Web & Frontend',
-                'icon' => 'HiCode',
-                'skills' => [
-                    ['name' => 'Next.JS', 'icon' => 'SiNextdotjs'],
-                    ['name' => 'Laravel', 'icon' => 'SiLaravel'],
-                    ['name' => 'HTML & CSS', 'icon' => 'HiCode'],
-                    ['name' => 'Wordpress', 'icon' => 'SiWordpress'],
-                    ['name' => 'Rest API', 'icon' => 'HiCode'],
-                    ['name' => 'Java', 'icon' => 'SiJava'], // New skill added here
+                'title' => 'Web & Frontend', 'icon' => 'HiCode', 'skills' => [
+                    ['name' => 'Next.JS', 'icon' => 'SiNextdotjs'], ['name' => 'Laravel', 'icon' => 'SiLaravel'], ['name' => 'HTML & CSS', 'icon' => 'HiCode'], ['name' => 'Wordpress', 'icon' => 'SiWordpress'], ['name' => 'Rest API', 'icon' => 'HiCode'], ['name' => 'Java', 'icon' => 'SiJava'],
                 ],
             ],
             [
-                'title' => 'Server & Hosting',
-                'icon' => 'HiServer',
-                'skills' => [
-                    ['name' => 'WHM & cPanel', 'icon' => 'SiCpanel'],
-                    ['name' => 'Linux System Admin', 'icon' => 'SiLinux'],
-                    ['name' => 'Network Infrastructure', 'icon' => 'HiServer'],
-                    ['name' => 'System Monitoring', 'icon' => 'HiDesktopComputer'],
-                    ['name' => 'Bash Scripting', 'icon' => 'HiCode'],
+                'title' => 'Server & Hosting', 'icon' => 'HiServer', 'skills' => [
+                    ['name' => 'WHM & cPanel', 'icon' => 'SiCpanel'], ['name' => 'Linux System Admin', 'icon' => 'SiLinux'], ['name' => 'Network Infrastructure', 'icon' => 'HiServer'], ['name' => 'System Monitoring', 'icon' => 'HiDesktopComputer'], ['name' => 'Bash Scripting', 'icon' => 'HiCode'],
                 ],
             ],
             [
-                'title' => 'Tools & General Tech',
-                'icon' => 'HiDatabase',
-                'skills' => [
-                    ['name' => 'Git', 'icon' => 'SiGit'],
-                    ['name' => 'MySQL', 'icon' => 'SiMysql'],
-                    ['name' => 'Technical Support', 'icon' => 'HiDesktopComputer'],
-                    ['name' => 'Payment Platforms', 'icon' => 'HiDesktopComputer'],
+                'title' => 'Tools & General Tech', 'icon' => 'HiDatabase', 'skills' => [
+                    ['name' => 'Git', 'icon' => 'SiGit'], ['name' => 'MySQL', 'icon' => 'SiMysql'], ['name' => 'Technical Support', 'icon' => 'HiDesktopComputer'], ['name' => 'Payment Platforms', 'icon' => 'HiDesktopComputer'],
                 ],
             ],
         ];
-
         foreach ($skillCategoriesData as $catData) {
             $category = new SkillCategory();
             $category->setTitle($catData['title']);
             $category->setIcon($catData['icon']);
             $manager->persist($category);
-
             foreach ($catData['skills'] as $skillData) {
                 $skill = new Skill();
                 $skill->setName($skillData['name']);
@@ -162,51 +175,6 @@ class AppFixtures extends Fixture
                 $manager->persist($skill);
             }
         }
-
-        // About Me Data
-        $about = new About();
-        $about->setContent('Experienced Website Developer, Technical Specialist, and Technical Hosting Specialist with a strong background in web technologies. Proven track record in website development, management, and technical hosting support. Expertise includes overseeing technical implementation, efficiently troubleshooting complex issues, and providing exceptional customer service. Enthusiastic about leveraging knowledge and experience to contribute to innovative digital projects and provide comprehensive technical hosting support.');
-        $manager->persist($about);
-
-        // Profile Data
-        $profile = new Profile();
-        $profile->setName('Yosua Ferdian');
-        $profile->setTitle('Technical Specialist & Web FullStack Developer');
-        $profile->setEmail('ferdianyosua@gmail.com');
-        $profile->setPhone('+601127817121');
-        $profile->setLinkedin('https://www.linkedin.com/in/yosua-ferdian-a1a929116/');
-        $manager->persist($profile);
-
-        // Education Data
-        $education = new Education();
-        $education->setDegree('Bachelor of Computer Science');
-        $education->setUniversity('Universitas Bina Nusantara');
-        $education->setPeriod('Aug 2015 - Jun 2020');
-        $education->setDetails([
-            "Built a solid foundation in computer science, focusing on algorithms, software development, and system architecture.",
-            "Gained expertise in programming languages such as JavaScript, PHP, HTML, and Bash, and developed foundational skills in Java, with practical applications in web development and database management."
-        ]);
-        $manager->persist($education);
-
-        // Languages Data
-        $languagesData = [
-            ['lang' => 'Indonesian', 'level' => 'Native Speaker'],
-            ['lang' => 'Malay', 'level' => 'Fluent'],
-            ['lang' => 'English', 'level' => 'Very Good'],
-        ];
-
-        foreach ($languagesData as $langData) {
-            $language = new Language();
-            $language->setLang($langData['lang']);
-            $language->setLevel($langData['level']);
-            $manager->persist($language);
-        }
-
-        // Personal Info Data
-        $personalInfo = new PersonalInfo();
-        $personalInfo->setDob('07-05-1997');
-        $personalInfo->setNationality('Indonesian');
-        $manager->persist($personalInfo);
 
         $manager->flush();
     }
