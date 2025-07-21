@@ -1,0 +1,28 @@
+security:
+    password_hashers:
+        App\Entity\User: 'auto'
+
+    providers:
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        # This is now the ONLY firewall for your API
+        api:
+            pattern:   ^/api
+            stateless: true
+            jwt: ~ # This tells the firewall to look for a JWT on requests
+
+    access_control:
+        # The login path is now public because it's a normal controller
+        - { path: ^/api/login, roles: PUBLIC_ACCESS }
+        # All GET requests to the API are public
+        - { path: ^/api, roles: PUBLIC_ACCESS, methods: [GET] }
+        # All other API requests (POST, PUT, DELETE) require a token
+        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }

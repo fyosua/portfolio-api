@@ -3,42 +3,29 @@ services:
     build:
       context: .
     restart: unless-stopped
-    environment:
-      APP_ENV: ${APP_ENV}
-      APP_SECRET: ${APP_SECRET}
-      DATABASE_URL: ${DATABASE_URL}
-    ports:
-      - "80:80" # We only need HTTP now
+    env_file:
+      - .env
     volumes:
       - .:/app
-      # This is the crucial line that overwrites the default config
       - ./Caddyfile:/etc/frankenphp/Caddyfile
+    ports:
+      - "80:80"
     depends_on:
-      - database
-    
-    # --- ADDED THIS SECTION ---
-    # This limits the container to 512MB of RAM to optimize resource use
-    # can't use in raspberry pi OS
-    # mem_limit: 512m
-    
-    # This checks if the API is responsive and restarts it if it crashes
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost/api"]
-      interval: 1m30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
-    # --- END ADDED SECTION ---
+      database:
+        condition: service_healthy
 
   database:
     image: "postgres:16-alpine"
     restart: unless-stopped
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    env_file:
+      - .env
     volumes:
       - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
 volumes:
   db-data:

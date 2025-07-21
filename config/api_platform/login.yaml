@@ -1,0 +1,33 @@
+paths:
+  /api/login:
+    post:
+      tags:
+        - Token
+      summary: Get a JWT token to authenticate.
+      description: Use your credentials to receive a JSON Web Token.
+      requestBody:
+        description: The user credentials
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: 'admin@yosuaf.com'
+                password:
+                  type: string
+                  example: 'password'
+      responses:
+        '200':
+          description: 'Authentication successful, token returned'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...'
+        '401':
+          description: 'Authentication failed: Invalid credentials'

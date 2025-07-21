@@ -10,14 +10,32 @@ use App\Entity\PersonalInfo;
 use App\Entity\Profile;
 use App\Entity\Skill;
 use App\Entity\SkillCategory;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+    private $passwordHasher;
+
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
+
     public function load(ObjectManager $manager): void
     {
-        // Profile Data (Singleton)
+        // --- Create a default user ---
+        $user = new User();
+        $user->setEmail('admin@yosuaf.com');
+        // Hash the password "password" using Symfony's hasher
+        $user->setPassword(
+            $this->passwordHasher->hashPassword($user, 'password')
+        );
+        $manager->persist($user);
+
+        // --- Profile Data (Singleton) ---
         $profile = new Profile();
         $profile->setName('Yosua Ferdian');
         $profile->setTitle('Technical Specialist & Web FullStack Developer');
@@ -26,18 +44,18 @@ class AppFixtures extends Fixture
         $profile->setLinkedin('https://www.linkedin.com/in/yosua-ferdian-a1a929116/');
         $manager->persist($profile);
 
-        // About Me Data (Singleton)
+        // --- About Me Data (Singleton) ---
         $about = new About();
         $about->setContent('Experienced Website Developer, Technical Specialist, and Technical Hosting Specialist with a strong background in web technologies. Proven track record in website development, management, and technical hosting support. Expertise includes overseeing technical implementation, efficiently troubleshooting complex issues, and providing exceptional customer service. Enthusiastic about leveraging knowledge and experience to contribute to innovative digital projects and provide comprehensive technical hosting support.');
         $manager->persist($about);
 
-        // Personal Info Data (Singleton)
+        // --- Personal Info Data (Singleton) ---
         $personalInfo = new PersonalInfo();
         $personalInfo->setDob('07-05-1997');
         $personalInfo->setNationality('Indonesian');
         $manager->persist($personalInfo);
 
-        // Education Data
+        // --- Education Data ---
         $education = new Education();
         $education->setDegree('Bachelor of Computer Science');
         $education->setUniversity('Universitas Bina Nusantara');
@@ -48,7 +66,7 @@ class AppFixtures extends Fixture
         ]);
         $manager->persist($education);
 
-        // Languages Data
+        // --- Languages Data ---
         $languagesData = [
             ['lang' => 'Indonesian', 'level' => 'Native Speaker'],
             ['lang' => 'Malay', 'level' => 'Fluent'],
@@ -61,7 +79,7 @@ class AppFixtures extends Fixture
             $manager->persist($language);
         }
 
-        // Experiences Data
+        // --- Experiences Data ---
         $experiencesData = [
             [
                 'role' => 'Technical Specialist - Google Technical Solutions (Rehired)',
@@ -139,7 +157,7 @@ class AppFixtures extends Fixture
             $manager->persist($experience);
         }
 
-        // Skills Data
+        // --- Skills Data ---
         $skillCategoriesData = [
             [
                 'title' => 'Google Ecosystem', 'icon' => 'SiGoogle', 'skills' => [
