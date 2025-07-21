@@ -1,0 +1,95 @@
+paths:
+  /api/login:
+    post:
+      tags:
+        - "User & Authentication"
+      summary: Get a JWT token to authenticate.
+      description: Use your credentials to receive a JSON Web Token that will be used to authorize protected requests.
+      requestBody:
+        description: The user credentials.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: 'admin@yosuaf.com'
+                password:
+                  type: string
+                  example: 'password'
+      responses:
+        '200':
+          description: 'Authentication successful, token returned.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...'
+        '401':
+          description: 'Authentication failed: Invalid credentials.'
+
+  /api/register:
+    post:
+      tags:
+        - "User & Authentication"
+      summary: Register a new admin user. (Protected)
+      description: Creates a new user with the provided email and password. Requires a valid JWT from a logged-in admin.
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: The new user's credentials.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: 'new.admin@yosuaf.com'
+                password:
+                  type: string
+                  example: 'a-strong-password'
+      responses:
+        '201':
+          description: 'User created successfully.'
+        '401':
+          description: 'Authentication required.'
+        '409':
+          description: 'User with this email already exists.'
+
+  /api/users/{id}:
+    patch:
+      tags:
+        - "User & Authentication"
+      summary: Change a user's password. (Protected)
+      description: Updates the password for a specific user by their ID. Requires a valid JWT from a logged-in admin.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the user to update.
+          schema:
+            type: integer
+      requestBody:
+        description: The new password.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                  example: 'a-new-strong-password'
+      responses:
+        '200':
+          description: 'Password updated successfully.'
+        '401':
+          description: 'Authentication required.'
+        '404':
+          description: 'User not found.'

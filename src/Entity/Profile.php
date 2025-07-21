@@ -35,11 +35,7 @@ class Profile
     #[ApiProperty(description: "URL to the LinkedIn profile.", example: "https://www.linkedin.com/in/yosua-ferdian-a1a929116/")]
     private ?string $linkedin = null;
 
-    public function __construct()
-    {
-        $this->id = 1;
-    }
-
+    public function __construct() { $this->id = 1; }
     public function getId(): ?int { return $this->id; }
     public function getName(): ?string { return $this->name; }
     public function setName(string $name): static { $this->name = $name; return $this; }
