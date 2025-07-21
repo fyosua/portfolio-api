@@ -18,7 +18,8 @@ services:
     
     # --- ADDED THIS SECTION ---
     # This limits the container to 512MB of RAM to optimize resource use
-    mem_limit: 512m
+    # can't use in raspberry pi OS
+    # mem_limit: 512m
     
     # This checks if the API is responsive and restarts it if it crashes
     healthcheck:
