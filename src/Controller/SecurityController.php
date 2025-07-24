@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 class SecurityController extends AbstractController
 {
@@ -101,5 +103,88 @@ class SecurityController extends AbstractController
         $entityManager->flush();
 
         return new JsonResponse(['message' => 'Password updated successfully']);
+    }
+
+    #[Route('/api/auth/validate', name: 'api_auth_validate', methods: ['GET'])]
+    public function validate(
+        Request $request,
+        JWTTokenManagerInterface $jwtManager,
+        TokenStorageInterface $tokenStorage
+    ): JsonResponse
+    {
+        try {
+            // Get the Authorization header
+            $authHeader = $request->headers->get('Authorization');
+            
+            if (!$authHeader || !str_starts_with($authHeader, 'Bearer ')) {
+                return new JsonResponse([
+                    'valid' => false,
+                    'message' => 'Missing or invalid Authorization header'
+                ], 401);
+            }
+
+            // Extract the token
+            $token = substr($authHeader, 7); // Remove "Bearer " prefix
+
+            if (empty($token)) {
+                return new JsonResponse([
+                    'valid' => false,
+                    'message' => 'Empty token'
+                ], 401);
+            }
+
+            // Validate token structure and signature
+            try {
+                $payload = $jwtManager->parse($token);
+            } catch (\Exception $e) {
+                return new JsonResponse([
+                    'valid' => false,
+                    'message' => 'Invalid token format or signature'
+                ], 401);
+            }
+
+            // Check if token is expired
+            $currentTime = time();
+            if (isset($payload['exp']) && $payload['exp'] < $currentTime) {
+                return new JsonResponse([
+                    'valid' => false,
+                    'message' => 'Token has expired'
+                ], 401);
+            }
+
+            // Get current user from token storage (if authenticated)
+            $tokenObj = $tokenStorage->getToken();
+            if (!$tokenObj || !$tokenObj->getUser()) {
+                return new JsonResponse([
+                    'valid' => false,
+                    'message' => 'User not authenticated'
+                ], 401);
+            }
+
+            $user = $tokenObj->getUser();
+
+            // Return success with user info
+            return new JsonResponse([
+                'valid' => true,
+                'message' => 'Token is valid',
+                'user' => [
+                    'id' => $user->getId(),
+                    'email' => $user->getEmail(),
+                    'roles' => $user->getRoles()
+                ],
+                'expires_at' => $payload['exp'] ?? null
+            ], 200);
+
+        } catch (AuthenticationException $e) {
+            return new JsonResponse([
+                'valid' => false,
+                'message' => 'Authentication failed: ' . $e->getMessage()
+            ], 401);
+        } catch (\Exception $e) {
+            return new JsonResponse([
+                'valid' => false,
+                'message' => 'Token validation error: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }
