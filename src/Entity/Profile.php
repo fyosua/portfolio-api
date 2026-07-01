@@ -35,6 +35,10 @@ class Profile
     #[ApiProperty(description: "URL to the LinkedIn profile.", example: "https://www.linkedin.com/in/yosua-ferdian-a1a929116/")]
     private ?string $linkedin = null;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[ApiProperty(description: "Relative path to the profile photo.", example: "/uploads/profile-photos/abc123.jpg")]
+    private ?string $photo = null;
+
     public function __construct() { $this->id = 1; }
     public function getId(): ?int { return $this->id; }
     public function getName(): ?string { return $this->name; }
@@ -47,4 +51,6 @@ class Profile
     public function setPhone(string $phone): static { $this->phone = $phone; return $this; }
     public function getLinkedin(): ?string { return $this->linkedin; }
     public function setLinkedin(string $linkedin): static { $this->linkedin = $linkedin; return $this; }
+    public function getPhoto(): ?string { return $this->photo; }
+    public function setPhoto(?string $photo): static { $this->photo = $photo; return $this; }
 }
