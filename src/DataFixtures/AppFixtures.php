@@ -29,7 +29,6 @@ class AppFixtures extends Fixture
         // --- Create a default user ---
         $user = new User();
         $user->setEmail('admin@yosuaf.com');
-        // Hash the password "password" using Symfony's hasher
         $user->setPassword(
             $this->passwordHasher->hashPassword($user, 'password')
         );
@@ -79,13 +78,14 @@ class AppFixtures extends Fixture
             $manager->persist($language);
         }
 
-        // --- Experiences Data ---
+        // --- Experiences Data (with updated date format) ---
         $experiencesData = [
             [
                 'role' => 'Technical Specialist - Google Technical Solutions (Rehired)',
                 'company' => 'TDCX',
                 'location' => 'Kuala Lumpur',
-                'date' => 'Sep 2024 - Present',
+                'startDate' => '2024-09-01',
+                'endDate' => null, // null for current job
                 'summary' => 'Rehired to resume responsibilities as a Technical Specialist, highlighting my proven expertise and performance in Google Tracking solutions.',
                 'responsibilities' => [
                     ['point' => 'Continue specializing in implementing and managing Google Tracking tools, including Google Ads, Google Analytics, Google Tag Manager, and Google Merchant Center.'],
@@ -96,7 +96,8 @@ class AppFixtures extends Fixture
                 'role' => 'Technical Hosting Support Engineer',
                 'company' => 'PT. World Host Group',
                 'location' => 'Bali',
-                'date' => 'Feb 2024 - Aug 2024',
+                'startDate' => '2024-02-01',
+                'endDate' => '2024-08-31',
                 'summary' => 'I excel at promptly resolving diverse client inquiries across hosting services, ensuring uninterrupted operations for our valued clients.',
                 'responsibilities' => [
                     [
@@ -113,7 +114,8 @@ class AppFixtures extends Fixture
                 'role' => 'Technical Specialist - Google Technical Solutions',
                 'company' => 'TDCX',
                 'location' => 'Kuala Lumpur',
-                'date' => 'Sep 2022 - Nov 2023',
+                'startDate' => '2022-09-01',
+                'endDate' => '2023-11-30',
                 'summary' => 'Dedicated myself to specializing in Google Tracking products.',
                 'responsibilities' => [
                     ['point' => 'Proficiently implemented Google Tracking Tools, including Google Ads, Google Analytics, Google Tag Manager, and Google Merchant Center.'],
@@ -124,7 +126,8 @@ class AppFixtures extends Fixture
                 'role' => 'Back End Developer',
                 'company' => 'PT. Uniktif Media (Unictive)',
                 'location' => 'Jakarta',
-                'date' => 'Feb 2021 - Feb 2022',
+                'startDate' => '2021-02-01',
+                'endDate' => '2022-02-28',
                 'summary' => 'Designed and enhanced server-side applications, with proficiency in PHP, JavaScript, and frameworks like Laravel and React.',
                 'responsibilities' => [
                     ['point' => 'Prioritized seamless API integration between the website\'s back-end and front-end to optimize user experience.'],
@@ -137,7 +140,8 @@ class AppFixtures extends Fixture
                 'role' => 'IT Support',
                 'company' => 'PT Dewaweb',
                 'location' => 'Jakarta',
-                'date' => 'Feb 2018 - Feb 2019',
+                'startDate' => '2018-02-01',
+                'endDate' => '2019-02-28',
                 'summary' => 'Committed to providing high-quality IT support, delivering technical assistance via phone and email within a CRM system.',
                 'responsibilities' => [
                     ['point' => 'Proficient in troubleshooting server products (cPanel, WHMPanel, CloudFlare, SSL, Redis), primarily for WordPress websites.'],
@@ -151,7 +155,12 @@ class AppFixtures extends Fixture
             $experience->setRole($expData['role']);
             $experience->setCompany($expData['company']);
             $experience->setLocation($expData['location']);
-            $experience->setDate($expData['date']);
+            $experience->setStartDate(new \DateTime($expData['startDate']));
+            if ($expData['endDate']) {
+                $experience->setEndDate(new \DateTime($expData['endDate']));
+            } else {
+                $experience->setEndDate(null);
+            }
             $experience->setSummary($expData['summary']);
             $experience->setResponsibilities($expData['responsibilities']);
             $manager->persist($experience);

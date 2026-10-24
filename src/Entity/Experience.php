@@ -29,10 +29,6 @@ class Experience
     #[ApiProperty(description: "The location of the job.", example: "Kuala Lumpur")]
     private ?string $location = null;
 
-    #[ORM\Column(length: 255)]
-    #[ApiProperty(description: "The time period of the employment.", example: "Sep 2022 - Nov 2023")]
-    private ?string $date = null;
-
     #[ORM\Column(type: Types::TEXT)]
     #[ApiProperty(description: "A brief summary of the role.", example: "Dedicated myself to specializing in Google Tracking products.")]
     private ?string $summary = null;
@@ -41,6 +37,14 @@ class Experience
     #[ApiProperty(description: "A list of key responsibilities and achievements.", example: "[{\"point\": \"Proficiently implemented Google Tracking Tools...\"}]")]
     private array $responsibilities = [];
 
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ApiProperty(description: "The start date of the employment.", example: "2024-09-01")]
+    private ?\DateTimeInterface $startDate = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[ApiProperty(description: "The end date of the employment. Null if current.", example: "2024-08-31")]
+    private ?\DateTimeInterface $endDate = null;
+
     public function getId(): ?int { return $this->id; }
     public function getRole(): ?string { return $this->role; }
     public function setRole(string $role): static { $this->role = $role; return $this; }
@@ -48,10 +52,12 @@ class Experience
     public function setCompany(string $company): static { $this->company = $company; return $this; }
     public function getLocation(): ?string { return $this->location; }
     public function setLocation(string $location): static { $this->location = $location; return $this; }
-    public function getDate(): ?string { return $this->date; }
-    public function setDate(string $date): static { $this->date = $date; return $this; }
     public function getSummary(): ?string { return $this->summary; }
     public function setSummary(string $summary): static { $this->summary = $summary; return $this; }
     public function getResponsibilities(): array { return $this->responsibilities; }
     public function setResponsibilities(array $responsibilities): static { $this->responsibilities = $responsibilities; return $this; }
+    public function getStartDate(): ?\DateTimeInterface { return $this->startDate; }
+    public function setStartDate(\DateTimeInterface $startDate): static { $this->startDate = $startDate; return $this; }
+    public function getEndDate(): ?\DateTimeInterface { return $this->endDate; }
+    public function setEndDate(?\DateTimeInterface $endDate): static { $this->endDate = $endDate; return $this; }
 }
